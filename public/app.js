@@ -1,7 +1,9 @@
 let result = null;
 
 
-/* ================= HELPERS ================= */
+/* =========================================
+   HELPER
+========================================= */
 
 function $(id) {
   return document.getElementById(id);
@@ -9,21 +11,32 @@ function $(id) {
 
 
 function money(value) {
-  return "$" + Number(value || 0).toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+
+  return "$" +
+    Number(value || 0).toLocaleString(
+      undefined,
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }
+    );
+
 }
 
 
 function esc(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  }[char]));
+
+  return String(value).replace(
+    /[&<>"']/g,
+    char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[char])
+  );
+
 }
 
 
@@ -34,13 +47,17 @@ function toast(message) {
   $("toast").classList.add("show");
 
   setTimeout(() => {
+
     $("toast").classList.remove("show");
+
   }, 2200);
 
 }
 
 
-/* ================= FILE INPUT ================= */
+/* =========================================
+   FILE INPUT
+========================================= */
 
 function fileText(input) {
 
@@ -49,7 +66,9 @@ function fileText(input) {
     const file = input.files[0];
 
     if (!file) {
+
       resolve("");
+
       return;
     }
 
@@ -84,17 +103,22 @@ $("ledgerFile").onchange = () => {
 };
 
 
-/* ================= DEMO ================= */
+/* =========================================
+   LOAD DEMO
+========================================= */
 
 async function loadDemo() {
 
   try {
 
-    const response = await fetch("/api/demo");
+    const response =
+      await fetch("/api/demo");
 
-    const data = await response.json();
+    const data =
+      await response.json();
 
-    result = data.result;
+    result =
+      data.result;
 
     render(data.result);
 
@@ -109,20 +133,28 @@ async function loadDemo() {
 }
 
 
-/* ================= RECONCILIATION ================= */
+/* =========================================
+   RECONCILE
+========================================= */
 
 async function runReconcile() {
 
   const vendor =
-    await fileText($("vendorFile"));
+    await fileText(
+      $("vendorFile")
+    );
 
   const ledger =
-    await fileText($("ledgerFile"));
+    await fileText(
+      $("ledgerFile")
+    );
 
 
   if (!vendor || !ledger) {
 
-    toast("Select both CSV files first");
+    toast(
+      "Select both CSV files first"
+    );
 
     return;
 
@@ -131,21 +163,23 @@ async function runReconcile() {
 
   try {
 
-    const response = await fetch(
-      "/api/reconcile",
-      {
-        method: "POST",
+    const response =
+      await fetch(
+        "/api/reconcile",
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "application/json"
-        },
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-        body: JSON.stringify({
-          vendorCSV: vendor,
-          ledgerCSV: ledger
-        })
-      }
-    );
+          body: JSON.stringify({
+            vendorCSV: vendor,
+            ledgerCSV: ledger
+          })
+        }
+      );
 
 
     const data =
@@ -154,7 +188,9 @@ async function runReconcile() {
 
     if (!response.ok) {
 
-      throw new Error(data.error);
+      throw new Error(
+        data.error
+      );
 
     }
 
@@ -163,18 +199,24 @@ async function runReconcile() {
 
     render(data);
 
-    toast("Reconciliation completed");
+    toast(
+      "Reconciliation completed"
+    );
 
   } catch (error) {
 
-    toast(error.message);
+    toast(
+      error.message
+    );
 
   }
 
 }
 
 
-/* ================= RENDER ================= */
+/* =========================================
+   RENDER RESULTS
+========================================= */
 
 function render(data) {
 
@@ -182,11 +224,15 @@ function render(data) {
   /* KPI */
 
   $("vendorBal").textContent =
-    money(data.summaryStats.vendorBalance);
+    money(
+      data.summaryStats.vendorBalance
+    );
 
 
   $("ledgerBal").textContent =
-    money(data.summaryStats.ledgerBalance);
+    money(
+      data.summaryStats.ledgerBalance
+    );
 
 
   $("matched").textContent =
@@ -200,10 +246,16 @@ function render(data) {
   /* STATUS */
 
   $("variance").textContent =
-    Math.abs(data.summaryStats.variance) < 0.001
+    Math.abs(
+      data.summaryStats.variance
+    ) < 0.001
+
       ? "BALANCED"
+
       : "Variance " +
-        money(data.summaryStats.variance);
+        money(
+          data.summaryStats.variance
+        );
 
 
   $("statusText").textContent =
@@ -252,159 +304,206 @@ function render(data) {
   const discrepancyHTML = [];
 
 
-  data.discrepancies.forEach(item => {
+  data.discrepancies.forEach(
+    item => {
 
-    discrepancyHTML.push(`
+      discrepancyHTML.push(`
 
-      <div class="exception">
+        <div class="exception">
 
-        <div class="ex-top">
+          <div class="ex-top">
 
-          <span class="ex-title">
-            ${esc(item.kind)}
-          </span>
+            <span class="ex-title">
+              ${esc(item.kind)}
+            </span>
 
-          <span class="priority ${String(
-            item.priority || "Medium"
-          ).toLowerCase()}">
+            <span
+              class="priority ${String(
+                item.priority || "Medium"
+              ).toLowerCase()}"
+            >
+              ${esc(
+                item.priority ||
+                "Review"
+              )}
+            </span>
 
-            ${esc(item.priority || "Review")}
+          </div>
 
-          </span>
+
+          <div class="ex-reason">
+            ${esc(item.reason)}
+          </div>
+
+
+          ${
+            item.vendor
+
+              ? `
+
+                <div class="ex-fields">
+
+                  Vendor
+                  ${esc(
+                    item.vendor.reference
+                  )}
+
+                  · Ledger
+                  ${esc(
+                    item.ledger.reference
+                  )}
+
+                  · Match score
+                  ${Math.round(
+                    item.score * 100
+                  )}%
+
+                </div>
+
+              `
+
+              : ""
+          }
 
         </div>
 
+      `);
 
-        <div class="ex-reason">
-          ${esc(item.reason)}
-        </div>
-
-
-        ${
-          item.vendor
-            ? `
-
-              <div class="ex-fields">
-
-                Vendor
-                ${esc(item.vendor.reference)}
-
-                · Ledger
-                ${esc(item.ledger.reference)}
-
-                · Match score
-                ${Math.round(item.score * 100)}%
-
-              </div>
-
-            `
-            : ""
-        }
-
-      </div>
-
-    `);
-
-  });
+    }
+  );
 
 
   /* UNMATCHED VENDOR */
 
-  data.unmatchedVendor.forEach(item => {
+  data.unmatchedVendor.forEach(
+    item => {
 
-    discrepancyHTML.push(`
+      discrepancyHTML.push(`
 
-      <div class="exception">
+        <div class="exception">
 
-        <div class="ex-top">
+          <div class="ex-top">
 
-          <span class="ex-title">
-            Unmatched vendor transaction
-          </span>
+            <span class="ex-title">
+              Unmatched vendor transaction
+            </span>
 
-          <span class="priority high">
-            HIGH
-          </span>
+            <span class="priority high">
+              HIGH
+            </span>
+
+          </div>
+
+
+          <div class="ex-reason">
+
+            ${esc(
+              item.description
+            )}
+
+            —
+
+            ${money(
+              item.amount
+            )}
+
+          </div>
+
+
+          <div class="ex-fields">
+
+            ${esc(
+              item.reference
+            )}
+
+            ·
+
+            ${esc(
+              item.date
+            )}
+
+          </div>
 
         </div>
 
+      `);
 
-        <div class="ex-reason">
-
-          ${esc(item.description)}
-          —
-          ${money(item.amount)}
-
-        </div>
-
-
-        <div class="ex-fields">
-
-          ${esc(item.reference)}
-          ·
-          ${esc(item.date)}
-
-        </div>
-
-      </div>
-
-    `);
-
-  });
+    }
+  );
 
 
   /* UNMATCHED LEDGER */
 
-  data.unmatchedLedger.forEach(item => {
+  data.unmatchedLedger.forEach(
+    item => {
 
-    discrepancyHTML.push(`
+      discrepancyHTML.push(`
 
-      <div class="exception">
+        <div class="exception">
 
-        <div class="ex-top">
+          <div class="ex-top">
 
-          <span class="ex-title">
-            Unmatched ledger transaction
-          </span>
+            <span class="ex-title">
+              Unmatched ledger transaction
+            </span>
 
-          <span class="priority high">
-            HIGH
-          </span>
+            <span class="priority high">
+              HIGH
+            </span>
+
+          </div>
+
+
+          <div class="ex-reason">
+
+            ${esc(
+              item.description
+            )}
+
+            —
+
+            ${money(
+              item.amount
+            )}
+
+          </div>
+
+
+          <div class="ex-fields">
+
+            ${esc(
+              item.reference
+            )}
+
+            ·
+
+            ${esc(
+              item.date
+            )}
+
+          </div>
 
         </div>
 
+      `);
 
-        <div class="ex-reason">
-
-          ${esc(item.description)}
-          —
-          ${money(item.amount)}
-
-        </div>
-
-
-        <div class="ex-fields">
-
-          ${esc(item.reference)}
-          ·
-          ${esc(item.date)}
-
-        </div>
-
-      </div>
-
-    `);
-
-  });
+    }
+  );
 
 
   $("discrepancyList").innerHTML =
     discrepancyHTML.length
+
       ? discrepancyHTML.join("")
+
       : `
+
         <div class="empty">
+
           ✓ No discrepancies found.
+
         </div>
+
       `;
 
 
@@ -415,7 +514,9 @@ function render(data) {
 
 
   $("vendorRunningTable").innerHTML =
-    createRunningBalanceTable(data.vendor);
+    createRunningBalanceTable(
+      data.vendor
+    );
 
 
   /* LEDGER RUNNING BALANCE */
@@ -425,10 +526,12 @@ function render(data) {
 
 
   $("ledgerRunningTable").innerHTML =
-    createRunningBalanceTable(data.ledger);
+    createRunningBalanceTable(
+      data.ledger
+    );
 
 
-  /* MATCHED TRANSACTIONS */
+  /* MATCHED */
 
   $("matchCount").textContent =
     `${data.matches.length} records`;
@@ -459,43 +562,55 @@ function render(data) {
 
           <tbody>
 
-            ${data.matches.map(item => `
+            ${data.matches
+              .map(
+                item => `
 
-              <tr>
+                  <tr>
 
-                <td>
-                  ${esc(item.vendor.reference)}
-                </td>
+                    <td>
+                      ${esc(
+                        item.vendor.reference
+                      )}
+                    </td>
 
-                <td>
-                  ${esc(item.ledger.reference)}
-                </td>
+                    <td>
+                      ${esc(
+                        item.ledger.reference
+                      )}
+                    </td>
 
-                <td>
-                  ${esc(item.vendor.description)}
-                </td>
+                    <td>
+                      ${esc(
+                        item.vendor.description
+                      )}
+                    </td>
 
-                <td>
-                  ${money(item.vendor.amount)}
-                </td>
+                    <td>
+                      ${money(
+                        item.vendor.amount
+                      )}
+                    </td>
 
-                <td class="match-score">
+                    <td class="match-score">
 
-                  ${Math.round(
-                    item.score * 100
-                  )}%
+                      ${Math.round(
+                        item.score * 100
+                      )}%
 
-                </td>
+                    </td>
 
-                <td class="match-ok">
+                    <td class="match-ok">
 
-                  ✓ Matched
+                      ✓ Matched
 
-                </td>
+                    </td>
 
-              </tr>
+                  </tr>
 
-            `).join("")}
+                `
+              )
+              .join("")}
 
           </tbody>
 
@@ -506,7 +621,9 @@ function render(data) {
       : `
 
         <div class="empty">
+
           No exact matches.
+
         </div>
 
       `;
@@ -514,16 +631,22 @@ function render(data) {
 }
 
 
-/* ================= RUNNING BALANCE ================= */
+/* =========================================
+   RUNNING BALANCE TABLE
+========================================= */
 
-function createRunningBalanceTable(rows) {
+function createRunningBalanceTable(
+  rows
+) {
 
   if (!rows.length) {
 
     return `
+
       <div class="empty">
         No transactions found.
       </div>
+
     `;
 
   }
@@ -538,11 +661,26 @@ function createRunningBalanceTable(rows) {
         <tr>
 
           <th>Date</th>
-          <th>Reference</th>
-          <th>Description</th>
-          <th>Type</th>
-          <th>Amount</th>
-          <th>Running Balance</th>
+
+          <th>
+            Reference
+          </th>
+
+          <th>
+            Description
+          </th>
+
+          <th>
+            Type
+          </th>
+
+          <th>
+            Amount
+          </th>
+
+          <th>
+            Running Balance
+          </th>
 
         </tr>
 
@@ -551,49 +689,61 @@ function createRunningBalanceTable(rows) {
 
       <tbody>
 
-        ${rows.map(row => `
+        ${rows
+          .map(
+            row => `
 
-          <tr>
+              <tr>
 
-            <td>
-              ${esc(row.date)}
-            </td>
+                <td>
+                  ${esc(row.date)}
+                </td>
 
-            <td>
-              ${esc(row.reference)}
-            </td>
+                <td>
+                  ${esc(
+                    row.reference
+                  )}
+                </td>
 
-            <td>
-              ${esc(row.description)}
-            </td>
+                <td>
+                  ${esc(
+                    row.description
+                  )}
+                </td>
 
-            <td>
-              ${esc(row.type)}
-            </td>
+                <td>
+                  ${esc(row.type)}
+                </td>
 
-            <td>
+                <td>
 
-              ${
-                row.type === "CREDIT"
-                  ? "-"
-                  : "+"
-              }
+                  ${
+                    row.type === "CREDIT"
+                      ? "-"
+                      : "+"
+                  }
 
-              ${money(row.amount)}
+                  ${money(
+                    row.amount
+                  )}
 
-            </td>
+                </td>
 
-            <td>
+                <td>
 
-              <strong>
-                ${money(row.runningBalance)}
-              </strong>
+                  <strong>
+                    ${money(
+                      row.runningBalance
+                    )}
+                  </strong>
 
-            </td>
+                </td>
 
-          </tr>
+              </tr>
 
-        `).join("")}
+            `
+          )
+          .join("")}
 
       </tbody>
 
@@ -602,3 +752,134 @@ function createRunningBalanceTable(rows) {
   `;
 
 }
+
+
+/* =========================================
+   SIDEBAR NAVIGATION
+========================================= */
+
+function navigateTo(
+  targetId,
+  clickedButton
+) {
+
+  const target =
+    document.getElementById(
+      targetId
+    );
+
+  if (!target) return;
+
+
+  target.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(nav => {
+
+      nav.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  clickedButton.classList.add(
+    "active"
+  );
+
+}
+
+
+/* =========================================
+   ACTIVE SIDEBAR WHILE SCROLLING
+========================================= */
+
+const navigationSections = [
+
+  {
+    id: "dashboard",
+    nav: '[data-target="dashboard"]'
+  },
+
+  {
+    id: "summary",
+    nav: '[data-target="summary"]'
+  },
+
+  {
+    id: "discrepancies",
+    nav: '[data-target="discrepancies"]'
+  },
+
+  {
+    id: "matched",
+    nav: '[data-target="matched"]'
+  }
+
+];
+
+
+window.addEventListener(
+  "scroll",
+  () => {
+
+    let currentSection =
+      "dashboard";
+
+
+    navigationSections.forEach(
+      section => {
+
+        const element =
+          document.getElementById(
+            section.id
+          );
+
+        if (!element) return;
+
+
+        const position =
+          element.getBoundingClientRect()
+            .top;
+
+
+        if (position <= 150) {
+
+          currentSection =
+            section.id;
+
+        }
+
+      }
+    );
+
+
+    document
+      .querySelectorAll(".nav")
+      .forEach(nav => {
+
+        nav.classList.remove(
+          "active"
+        );
+
+
+        if (
+          nav.dataset.target ===
+          currentSection
+        ) {
+
+          nav.classList.add(
+            "active"
+          );
+
+        }
+
+      });
+
+  }
+);

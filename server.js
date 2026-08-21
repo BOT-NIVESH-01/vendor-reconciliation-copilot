@@ -36,6 +36,7 @@ function parseCSV(text) {
       });
 
       row.amount = Number(row.amount || 0);
+
       return row;
     });
 }
@@ -159,10 +160,6 @@ function reconcile(vendorRows, ledgerRows) {
       }
     }
 
-    /*
-      Score >= 0.75 means we found a sufficiently strong
-      candidate across the two datasets.
-    */
     if (best && best.score >= 0.75) {
       usedLedger.add(best.ledger.id);
 
@@ -216,9 +213,6 @@ function reconcile(vendorRows, ledgerRows) {
 
   const variance = vendorBalance - ledgerBalance;
 
-  /*
-    Add balance variance as an explicit reconciliation item.
-  */
   if (Math.abs(variance) > 0.001) {
     discrepancies.push({
       kind: "Balance variance",
@@ -233,10 +227,6 @@ function reconcile(vendorRows, ledgerRows) {
     });
   }
 
-  /*
-    Prioritize discrepancies:
-    High → Medium → Low
-  */
   const priorityOrder = {
     High: 1,
     Medium: 2,
@@ -249,9 +239,6 @@ function reconcile(vendorRows, ledgerRows) {
       (priorityOrder[b.priority] || 3)
   );
 
-  /*
-    Plain-English reconciliation summary.
-  */
   const totalExceptions =
     discrepancies.length +
     unmatchedVendor.length +
@@ -308,7 +295,6 @@ function reconcile(vendorRows, ledgerRows) {
   return {
     vendor: vendorRunning,
     ledger: ledgerRunning,
-
     matches,
     discrepancies,
     unmatchedVendor,
@@ -324,12 +310,6 @@ function reconcile(vendorRows, ledgerRows) {
       unmatchedVendor: unmatchedVendor.length,
       unmatchedLedger: unmatchedLedger.length,
       totalExceptions,
-      vendorBalance,
-      ledgerBalance,
-      variance
-    },
-
-    summaryData: {
       vendorBalance,
       ledgerBalance,
       variance
@@ -377,6 +357,7 @@ const demoResult = reconcile(
 );
 
 async function api(req, res, pathname) {
+
   if (pathname === "/api/demo" && req.method === "GET") {
     return sendJSON(res, 200, {
       vendorCSV,
@@ -386,9 +367,11 @@ async function api(req, res, pathname) {
   }
 
   if (pathname === "/api/reconcile" && req.method === "POST") {
+
     const body = await readBody(req);
 
     try {
+
       if (!body.vendorCSV || !body.ledgerCSV) {
         return sendJSON(res, 400, {
           error: "Both CSV files are required."
@@ -401,11 +384,14 @@ async function api(req, res, pathname) {
       );
 
       return sendJSON(res, 200, result);
+
     } catch (error) {
+
       return sendJSON(res, 400, {
         error:
           "Could not parse the CSV files. Required columns: date, reference, description, amount, type."
       });
+
     }
   }
 
@@ -415,6 +401,7 @@ async function api(req, res, pathname) {
 }
 
 function serveStatic(res, pathname) {
+
   const file =
     pathname === "/" ? "/index.html" : pathname;
 
@@ -430,6 +417,7 @@ function serveStatic(res, pathname) {
   }
 
   fs.readFile(fullPath, (error, data) => {
+
     if (error) {
       res.writeHead(404);
       return res.end("Not found");
@@ -453,6 +441,7 @@ function serveStatic(res, pathname) {
 
 http
   .createServer((req, res) => {
+
     const url = new URL(
       req.url,
       `http://${req.headers.host || "localhost"}`
@@ -463,6 +452,7 @@ http
     }
 
     serveStatic(res, url.pathname);
+
   })
   .listen(PORT, "0.0.0.0", () => {
     console.log(
