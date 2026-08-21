@@ -72,22 +72,6 @@ Problem 2 requires:
 - Transparent/inspectable matching logic → implemented
 - Correct reconciling balance → implemented
 
-## 5-minute demo
-
-**0:00–1:00:** Explain the business problem.
-
-**1:00–2:00:** Show the normalization and transparent matching logic.
-
-**2:00–4:00:** Load demo data:
-- 4 exact matches
-- 1 amount mismatch
-- 1 unmatched vendor/ledger scenario
-- balance variance
-
-Open the discrepancy panel and explain exactly why each item was flagged.
-
-**4:00–5:00:** Show the tradeoff:
-> "I deliberately kept reconciliation deterministic instead of hiding matching inside an LLM. This makes every match score, discrepancy and balance independently inspectable. A production LLM could summarize results, but it should not own the accounting calculation."
 
 ## Deployment
 
