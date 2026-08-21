@@ -164,4 +164,6 @@ http.createServer((req,res)=>{
   const u=new URL(req.url,`http://${req.headers.host||"localhost"}`);
   if(u.pathname.startsWith("/api/")) return api(req,res,u.pathname);
   serve(res,u.pathname);
-}).listen(PORT,()=>console.log(`Vendor Reconciliation Copilot running at http://localhost:${PORT}`));
+}).listen(PORT, "0.0.0.0", () => {
+  console.log(`Vendor Reconciliation Copilot running on port ${PORT}`);
+});
