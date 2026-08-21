@@ -38,20 +38,123 @@
 
 <section class="statusbar"><span id="statusDot"></span><b id="statusText">Ready to reconcile</b><span id="statusSub">Upload two CSV files or load the demo.</span></section>
 
-<section class="content-grid">
-  <div class="panel">
-    <div class="panel-head"><div><h2>Discrepancies</h2><p>Every exception includes a transparent reason.</p></div><span id="variance" class="variance">—</span></div>
-    <div id="discrepancyList" class="list"><div class="empty">Run a reconciliation to see discrepancies.</div></div>
+<section class="summary-card">
+  <div class="panel-head">
+    <div>
+      <h2>Reconciliation Summary</h2>
+      <p>Plain-English outcome generated from verified reconciliation results.</p>
+    </div>
+    <span id="summaryStatus" class="summary-status">—</span>
   </div>
+
+  <div id="summaryText" class="summary-text">
+    Run a reconciliation to generate the summary.
+  </div>
+</section>
+
+<section class="content-grid">
+
   <div class="panel">
-    <div class="panel-head"><div><h2>Matching logic</h2><p>Inspectable rules — no black-box matching.</p></div></div>
-    <div class="logic">
-      <div><span>01</span><b>Normalize</b><p>Convert both sources to a common transaction schema.</p></div>
-      <div><span>02</span><b>Match</b><p>Compare type, amount, description similarity and date proximity.</p></div>
-      <div><span>03</span><b>Classify</b><p>Exact matches, amount mismatches, and unmatched records.</p></div>
-      <div><span>04</span><b>Balance</b><p>Calculate signed running balances and identify variance.</p></div>
+    <div class="panel-head">
+      <div>
+        <h2>Discrepancies</h2>
+        <p>Prioritized by business impact.</p>
+      </div>
+
+      <span id="variance" class="variance">—</span>
+    </div>
+
+    <div id="discrepancyList" class="list">
+      <div class="empty">
+        Run a reconciliation to see discrepancies.
+      </div>
     </div>
   </div>
+
+  <div class="panel">
+
+    <div class="panel-head">
+      <div>
+        <h2>Matching Logic</h2>
+        <p>Inspectable rules — no black-box LLM.</p>
+      </div>
+    </div>
+
+    <div class="logic">
+
+      <div>
+        <span>01</span>
+        <b>Normalize</b>
+        <p>
+          Convert both sources into a common transaction schema.
+        </p>
+      </div>
+
+      <div>
+        <span>02</span>
+        <b>Match</b>
+        <p>
+          Compare type, amount, description similarity and date proximity.
+        </p>
+      </div>
+
+      <div>
+        <span>03</span>
+        <b>Classify</b>
+        <p>
+          Separate exact matches, mismatches and unmatched records.
+        </p>
+      </div>
+
+      <div>
+        <span>04</span>
+        <b>Balance</b>
+        <p>
+          Calculate signed balances and running balances.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<section class="panel running-panel">
+
+  <div class="panel-head">
+    <div>
+      <h2>Vendor Running Balance</h2>
+      <p>Transaction-by-transaction balance progression.</p>
+    </div>
+
+    <span id="vendorRunningCount">0 transactions</span>
+  </div>
+
+  <div id="vendorRunningTable" class="table-wrap">
+    <div class="empty">
+      No reconciliation run yet.
+    </div>
+  </div>
+
+</section>
+
+<section class="panel running-panel">
+
+  <div class="panel-head">
+    <div>
+      <h2>Ledger Running Balance</h2>
+      <p>Transaction-by-transaction balance progression.</p>
+    </div>
+
+    <span id="ledgerRunningCount">0 transactions</span>
+  </div>
+
+  <div id="ledgerRunningTable" class="table-wrap">
+    <div class="empty">
+      No reconciliation run yet.
+    </div>
+  </div>
+
 </section>
 
 <section class="panel matches-panel">
