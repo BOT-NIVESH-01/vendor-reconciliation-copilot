@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   background: #f5f7fb;
@@ -14,8 +18,9 @@ body {
   min-height: 100vh;
 }
 
-
-/* SIDEBAR */
+/* =========================================
+   SIDEBAR
+========================================= */
 
 aside {
   width: 245px;
@@ -67,10 +72,16 @@ aside {
   gap: 10px;
   align-items: center;
   font-size: 12px;
+  transition: 0.2s ease;
 }
 
 .nav.active {
   background: #202c3f;
+  color: #fff;
+}
+
+.nav:not(.active):hover {
+  background: #182335;
   color: #fff;
 }
 
@@ -106,7 +117,9 @@ aside {
 }
 
 
-/* MAIN */
+/* =========================================
+   MAIN
+========================================= */
 
 main {
   flex: 1;
@@ -120,6 +133,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 25px;
 }
 
 .eyebrow {
@@ -142,74 +156,124 @@ header p {
 }
 
 
-/* DEMO GUIDE */
+/* =========================================
+   DEMO BUTTON + ANIMATED ARROW
+========================================= */
 
 .demo-guide {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 2px;
+  gap: 13px;
+  margin-top: 3px;
 }
 
 .demo-hint {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   color: #6255e8;
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 750;
   white-space: nowrap;
-  animation: hintPulse 2s ease-in-out infinite;
 }
 
 .demo-hint .arrow {
-  font-size: 18px;
   display: inline-block;
-  animation: arrowMove 1.15s ease-in-out infinite;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+  color: #6255e8;
+  animation: demoArrowMove 1.05s ease-in-out infinite;
 }
 
 .demo {
-  background: #6255e8;
+  position: relative;
   border: 0;
-  border-radius: 8px;
-  padding: 10px 15px;
-  color: #fff;
+  border-radius: 10px;
+  padding: 12px 19px;
+
+  background: linear-gradient(
+    135deg,
+    #7567f5 0%,
+    #5a4be0 100%
+  );
+
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+
   cursor: pointer;
-  font-weight: 750;
-  font-size: 10px;
-  box-shadow: 0 5px 16px rgba(98, 85, 232, 0.22);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  box-shadow:
+    0 6px 18px rgba(98, 85, 232, 0.28);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.demo::after {
+  content: "";
+
+  position: absolute;
+  inset: -3px;
+
+  border-radius: 13px;
+  border: 1px solid rgba(98, 85, 232, 0.35);
+
+  opacity: 0;
+
+  animation: demoPulse 2.2s ease-out infinite;
+
+  pointer-events: none;
 }
 
 .demo:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(98, 85, 232, 0.3);
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 25px rgba(98, 85, 232, 0.38);
 }
 
-@keyframes arrowMove {
+.demo:active {
+  transform: translateY(0);
+}
+
+@keyframes demoArrowMove {
   0%,
   100% {
     transform: translateX(0);
   }
 
   50% {
-    transform: translateX(7px);
+    transform: translateX(8px);
   }
 }
 
-@keyframes hintPulse {
-  0%,
+@keyframes demoPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  35% {
+    opacity: 0.7;
+  }
+
+  70% {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+
   100% {
-    opacity: 0.65;
-  }
-
-  50% {
-    opacity: 1;
+    opacity: 0;
   }
 }
 
 
-/* UPLOAD */
+/* =========================================
+   UPLOAD SECTION
+========================================= */
 
 .upload-grid {
   display: grid;
@@ -223,6 +287,12 @@ header p {
   border: 1px solid #e3e7ee;
   border-radius: 11px;
   padding: 15px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.upload-card:hover {
+  border-color: #cbc7f5;
+  box-shadow: 0 4px 15px rgba(30, 40, 70, 0.04);
 }
 
 .upload-title {
@@ -277,10 +347,12 @@ header p {
   padding: 0 19px;
   font-weight: 800;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .reconcile:hover {
   background: #5144d5;
+  transform: translateY(-1px);
 }
 
 .reconcile span {
@@ -288,7 +360,9 @@ header p {
 }
 
 
-/* METRICS */
+/* =========================================
+   METRICS
+========================================= */
 
 .metrics {
   display: grid;
@@ -302,6 +376,12 @@ header p {
   border: 1px solid #e3e7ee;
   border-radius: 10px;
   padding: 14px 16px;
+  transition: 0.2s ease;
+}
+
+.metrics > div:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px rgba(30, 40, 70, 0.05);
 }
 
 .metrics small {
@@ -316,7 +396,9 @@ header p {
 }
 
 
-/* STATUS */
+/* =========================================
+   STATUS
+========================================= */
 
 .statusbar {
   background: #fff;
@@ -351,7 +433,9 @@ header p {
 }
 
 
-/* PANELS */
+/* =========================================
+   PANELS
+========================================= */
 
 .panel {
   background: #fff;
@@ -363,6 +447,7 @@ header p {
 .panel-head {
   padding: 15px 17px;
   border-bottom: 1px solid #edf0f4;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -380,7 +465,9 @@ header p {
 }
 
 
-/* SUMMARY */
+/* =========================================
+   RECONCILIATION SUMMARY
+========================================= */
 
 .summary-card {
   background: #fff;
@@ -392,16 +479,21 @@ header p {
 
 .summary-text {
   padding: 18px;
+
   font-size: 12px;
   line-height: 1.7;
+
   color: #4d596b;
 }
 
 .summary-status {
   font-size: 9px;
   font-weight: 800;
+
   padding: 5px 9px;
+
   border-radius: 20px;
+
   background: #fff0df;
   color: #a56b09;
 }
@@ -417,7 +509,9 @@ header p {
 }
 
 
-/* CONTENT */
+/* =========================================
+   CONTENT GRID
+========================================= */
 
 .content-grid {
   display: grid;
@@ -428,6 +522,11 @@ header p {
 .list {
   min-height: 245px;
 }
+
+
+/* =========================================
+   DISCREPANCIES
+========================================= */
 
 .exception {
   padding: 14px 17px;
@@ -463,7 +562,9 @@ header p {
 }
 
 
-/* PRIORITY */
+/* =========================================
+   PRIORITY
+========================================= */
 
 .priority {
   font-size: 8px;
@@ -488,7 +589,9 @@ header p {
 }
 
 
-/* MATCHING LOGIC */
+/* =========================================
+   MATCHING LOGIC
+========================================= */
 
 .logic {
   padding: 5px 17px 12px;
@@ -506,13 +609,18 @@ header p {
 .logic span {
   display: inline-grid;
   place-items: center;
+
   width: 22px;
   height: 22px;
+
   border-radius: 6px;
+
   background: #f0efff;
   color: #6558e9;
+
   font-size: 8px;
   font-weight: 800;
+
   margin-right: 8px;
 }
 
@@ -522,13 +630,17 @@ header p {
 
 .logic p {
   margin: 5px 0 0 31px;
+
   color: #7d8796;
+
   font-size: 9px;
   line-height: 1.4;
 }
 
 
-/* RUNNING BALANCE */
+/* =========================================
+   RUNNING BALANCE
+========================================= */
 
 .running-panel {
   margin-top: 13px;
@@ -540,7 +652,9 @@ header p {
 }
 
 
-/* TABLE */
+/* =========================================
+   TABLE
+========================================= */
 
 .table-wrap {
   overflow: auto;
@@ -584,7 +698,9 @@ header p {
 }
 
 
-/* VARIANCE */
+/* =========================================
+   VARIANCE
+========================================= */
 
 .variance {
   font-size: 10px;
@@ -593,29 +709,44 @@ header p {
 }
 
 
-/* EMPTY */
+/* =========================================
+   EMPTY STATES
+========================================= */
 
 .empty {
   padding: 45px 20px;
+
   text-align: center;
+
   color: #9aa3b0;
+
   font-size: 10px;
 }
 
 
-/* TOAST */
+/* =========================================
+   TOAST
+========================================= */
 
 #toast {
   position: fixed;
+
   right: 24px;
   bottom: 24px;
+
   background: #172033;
   color: #fff;
+
   padding: 10px 14px;
+
   border-radius: 8px;
+
   font-size: 10px;
+
   opacity: 0;
+
   transition: 0.2s;
+
   z-index: 1000;
 }
 
@@ -624,7 +755,9 @@ header p {
 }
 
 
-/* RESPONSIVE */
+/* =========================================
+   RESPONSIVE
+========================================= */
 
 @media (max-width: 950px) {
 
@@ -651,6 +784,7 @@ header p {
 
 }
 
+
 @media (max-width: 700px) {
 
   header {
@@ -660,10 +794,11 @@ header p {
 
   .demo-guide {
     width: 100%;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
 }
+
 
 @media (max-width: 600px) {
 

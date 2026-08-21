@@ -11,7 +11,6 @@
 
 <div class="shell">
 
-  <!-- SIDEBAR -->
   <aside>
 
     <div class="brand">
@@ -24,33 +23,27 @@
     </div>
 
     <div class="nav active">
-      ▦
-      <span>Reconciliation</span>
+      ▦ <span>Reconciliation</span>
     </div>
 
     <div class="nav">
-      ◌
-      <span>Discrepancies</span>
+      ◌ <span>Discrepancies</span>
     </div>
 
     <div class="nav">
-      ✓
-      <span>Matched Items</span>
+      ✓ <span>Matched Items</span>
     </div>
 
     <div class="nav">
-      ◷
-      <span>Audit Summary</span>
+      ◷ <span>Audit Summary</span>
     </div>
 
     <div class="side-card">
       <b>Offline Copilot</b>
-
       <p>
         All matching and balance calculations run locally.
         No external API or LLM is required.
       </p>
-
       <span>● LOCAL ONLY</span>
     </div>
 
@@ -61,14 +54,11 @@
   </aside>
 
 
-  <!-- MAIN -->
   <main>
 
-    <!-- HEADER -->
     <header>
 
       <div>
-
         <div class="eyebrow">
           FINANCE OPERATIONS / RECONCILIATION
         </div>
@@ -80,15 +70,14 @@
         <p>
           Transparent transaction matching with explainable discrepancy detection.
         </p>
-
       </div>
 
 
-      <!-- DEMO BUTTON + GUIDE -->
+      <!-- DEMO CTA -->
       <div class="demo-guide">
 
         <div class="demo-hint">
-          <span>Start here</span>
+          <span>Try the demo</span>
           <span class="arrow">➜</span>
         </div>
 
@@ -104,16 +93,13 @@
     </header>
 
 
-    <!-- CSV UPLOAD -->
     <section class="upload-grid">
 
       <div class="upload-card">
 
         <div class="upload-title">
 
-          <span class="num">
-            01
-          </span>
+          <span class="num">01</span>
 
           <div>
             <b>Vendor statement</b>
@@ -142,9 +128,7 @@
 
         <div class="upload-title">
 
-          <span class="num">
-            02
-          </span>
+          <span class="num">02</span>
 
           <div>
             <b>Internal ledger</b>
@@ -173,14 +157,12 @@
         class="reconcile"
         onclick="runReconcile()"
       >
-        Reconcile
-        <span>→</span>
+        Reconcile <span>→</span>
       </button>
 
     </section>
 
 
-    <!-- KPI METRICS -->
     <section class="metrics">
 
       <div>
@@ -206,7 +188,6 @@
     </section>
 
 
-    <!-- STATUS -->
     <section class="statusbar">
 
       <span id="statusDot"></span>
@@ -222,7 +203,6 @@
     </section>
 
 
-    <!-- SUMMARY -->
     <section class="summary-card">
 
       <div class="panel-head">
@@ -254,11 +234,8 @@
     </section>
 
 
-    <!-- DISCREPANCIES + LOGIC -->
     <section class="content-grid">
 
-
-      <!-- DISCREPANCIES -->
       <div class="panel">
 
         <div class="panel-head">
@@ -280,22 +257,18 @@
 
         </div>
 
-
         <div
           id="discrepancyList"
           class="list"
         >
-
           <div class="empty">
             Run a reconciliation to see discrepancies.
           </div>
-
         </div>
 
       </div>
 
 
-      <!-- MATCHING LOGIC -->
       <div class="panel">
 
         <div class="panel-head">
@@ -313,58 +286,37 @@
 
         <div class="logic">
 
-
           <div>
-
             <span>01</span>
-
             <b>Normalize</b>
-
             <p>
               Convert both sources into a common transaction schema.
             </p>
-
           </div>
 
-
           <div>
-
             <span>02</span>
-
             <b>Match</b>
-
             <p>
               Compare type, amount, description similarity and date proximity.
             </p>
-
           </div>
 
-
           <div>
-
             <span>03</span>
-
             <b>Classify</b>
-
             <p>
               Separate exact matches, mismatches and unmatched records.
             </p>
-
           </div>
 
-
           <div>
-
             <span>04</span>
-
             <b>Balance</b>
-
             <p>
               Calculate signed balances and running balances.
             </p>
-
           </div>
-
 
         </div>
 
@@ -373,21 +325,16 @@
     </section>
 
 
-    <!-- VENDOR RUNNING BALANCE -->
     <section class="panel running-panel">
 
       <div class="panel-head">
 
         <div>
-
-          <h2>
-            Vendor Running Balance
-          </h2>
+          <h2>Vendor Running Balance</h2>
 
           <p>
             Transaction-by-transaction balance progression.
           </p>
-
         </div>
 
         <span id="vendorRunningCount">
@@ -396,36 +343,28 @@
 
       </div>
 
-
       <div
         id="vendorRunningTable"
         class="table-wrap"
       >
-
         <div class="empty">
           No reconciliation run yet.
         </div>
-
       </div>
 
     </section>
 
 
-    <!-- LEDGER RUNNING BALANCE -->
     <section class="panel running-panel">
 
       <div class="panel-head">
 
         <div>
-
-          <h2>
-            Ledger Running Balance
-          </h2>
+          <h2>Ledger Running Balance</h2>
 
           <p>
             Transaction-by-transaction balance progression.
           </p>
-
         </div>
 
         <span id="ledgerRunningCount">
@@ -434,36 +373,28 @@
 
       </div>
 
-
       <div
         id="ledgerRunningTable"
         class="table-wrap"
       >
-
         <div class="empty">
           No reconciliation run yet.
         </div>
-
       </div>
 
     </section>
 
 
-    <!-- MATCHED TRANSACTIONS -->
     <section class="panel matches-panel">
 
       <div class="panel-head">
 
         <div>
-
-          <h2>
-            Matched transactions
-          </h2>
+          <h2>Matched transactions</h2>
 
           <p>
             Verified records across both sources.
           </p>
-
         </div>
 
         <span id="matchCount">
@@ -472,16 +403,13 @@
 
       </div>
 
-
       <div
         id="matchTable"
         class="table-wrap"
       >
-
         <div class="empty">
           No reconciliation run yet.
         </div>
-
       </div>
 
     </section>
@@ -490,10 +418,7 @@
 
 </div>
 
-
-<!-- TOAST -->
 <div id="toast"></div>
-
 
 <script src="/app.js"></script>
 
