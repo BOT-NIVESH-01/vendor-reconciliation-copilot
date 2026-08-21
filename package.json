@@ -1,0 +1,9 @@
+{
+  "name": "supervity-problem-2-vendor-reconciliation-copilot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline Supervity FDE Problem 2 - Vendor Reconciliation Copilot",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}

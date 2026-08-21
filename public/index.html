@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vendor Reconciliation Copilot</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="shell">
+<aside>
+  <div class="brand"><div class="logo">S</div><div><b>Supervity</b><small>AI Operations</small></div></div>
+  <div class="nav active">▦ <span>Reconciliation</span></div>
+  <div class="nav">◌ <span>Discrepancies</span></div>
+  <div class="nav">✓ <span>Matched Items</span></div>
+  <div class="nav">◷ <span>Audit Summary</span></div>
+  <div class="side-card"><b>Offline Copilot</b><p>All matching and balance calculations run locally. No external API or LLM is required.</p><span>● LOCAL ONLY</span></div>
+  <div class="foot">FDE Assessment · Problem 2</div>
+</aside>
+
+<main>
+<header>
+  <div><div class="eyebrow">FINANCE OPERATIONS / RECONCILIATION</div><h1>Vendor Reconciliation Copilot</h1><p>Transparent transaction matching with explainable discrepancy detection.</p></div>
+  <button class="demo" onclick="loadDemo()">Load demo data</button>
+</header>
+
+<section class="upload-grid">
+  <div class="upload-card"><div class="upload-title"><span class="num">01</span><div><b>Vendor statement</b><small>CSV file</small></div></div><input id="vendorFile" type="file" accept=".csv"><div id="vendorName" class="filename">No file selected</div></div>
+  <div class="upload-card"><div class="upload-title"><span class="num">02</span><div><b>Internal ledger</b><small>CSV file</small></div></div><input id="ledgerFile" type="file" accept=".csv"><div id="ledgerName" class="filename">No file selected</div></div>
+  <button class="reconcile" onclick="runReconcile()">Reconcile <span>→</span></button>
+</section>
+
+<section class="metrics">
+  <div><small>Vendor balance</small><b id="vendorBal">—</b></div>
+  <div><small>Ledger balance</small><b id="ledgerBal">—</b></div>
+  <div><small>Matched</small><b id="matched">—</b></div>
+  <div><small>Exceptions</small><b id="exceptions">—</b></div>
+</section>
+
+<section class="statusbar"><span id="statusDot"></span><b id="statusText">Ready to reconcile</b><span id="statusSub">Upload two CSV files or load the demo.</span></section>
+
+<section class="content-grid">
+  <div class="panel">
+    <div class="panel-head"><div><h2>Discrepancies</h2><p>Every exception includes a transparent reason.</p></div><span id="variance" class="variance">—</span></div>
+    <div id="discrepancyList" class="list"><div class="empty">Run a reconciliation to see discrepancies.</div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><div><h2>Matching logic</h2><p>Inspectable rules — no black-box matching.</p></div></div>
+    <div class="logic">
+      <div><span>01</span><b>Normalize</b><p>Convert both sources to a common transaction schema.</p></div>
+      <div><span>02</span><b>Match</b><p>Compare type, amount, description similarity and date proximity.</p></div>
+      <div><span>03</span><b>Classify</b><p>Exact matches, amount mismatches, and unmatched records.</p></div>
+      <div><span>04</span><b>Balance</b><p>Calculate signed running balances and identify variance.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel matches-panel">
+  <div class="panel-head"><div><h2>Matched transactions</h2><p>Verified records across both sources.</p></div><span id="matchCount">0 records</span></div>
+  <div id="matchTable" class="table-wrap"><div class="empty">No reconciliation run yet.</div></div>
+</section>
+</main>
+</div>
+<div id="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>
