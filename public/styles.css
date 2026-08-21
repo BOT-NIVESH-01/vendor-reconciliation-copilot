@@ -14,7 +14,8 @@ body {
   min-height: 100vh;
 }
 
-/* ================= SIDEBAR ================= */
+
+/* SIDEBAR */
 
 aside {
   width: 245px;
@@ -104,7 +105,8 @@ aside {
   margin: 18px 8px 0;
 }
 
-/* ================= MAIN ================= */
+
+/* MAIN */
 
 main {
   flex: 1;
@@ -139,20 +141,75 @@ header p {
   margin: 0;
 }
 
+
+/* DEMO GUIDE */
+
+.demo-guide {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.demo-hint {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #6255e8;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+
+.demo-hint .arrow {
+  font-size: 18px;
+  display: inline-block;
+  animation: arrowMove 1.15s ease-in-out infinite;
+}
+
 .demo {
-  background: #fff;
-  border: 1px solid #dfe4ed;
+  background: #6255e8;
+  border: 0;
   border-radius: 8px;
-  padding: 9px 13px;
-  color: #5c687a;
+  padding: 10px 15px;
+  color: #fff;
   cursor: pointer;
+  font-weight: 750;
+  font-size: 10px;
+  box-shadow: 0 5px 16px rgba(98, 85, 232, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .demo:hover {
-  background: #f7f8fb;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(98, 85, 232, 0.3);
 }
 
-/* ================= UPLOAD ================= */
+@keyframes arrowMove {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(7px);
+  }
+}
+
+@keyframes hintPulse {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+
+/* UPLOAD */
 
 .upload-grid {
   display: grid;
@@ -230,7 +287,8 @@ header p {
   margin-left: 7px;
 }
 
-/* ================= METRICS ================= */
+
+/* METRICS */
 
 .metrics {
   display: grid;
@@ -257,7 +315,8 @@ header p {
   margin-top: 5px;
 }
 
-/* ================= STATUS ================= */
+
+/* STATUS */
 
 .statusbar {
   background: #fff;
@@ -291,7 +350,8 @@ header p {
   background: #e05252;
 }
 
-/* ================= PANELS ================= */
+
+/* PANELS */
 
 .panel {
   background: #fff;
@@ -319,7 +379,8 @@ header p {
   margin: 0;
 }
 
-/* ================= SUMMARY ================= */
+
+/* SUMMARY */
 
 .summary-card {
   background: #fff;
@@ -355,7 +416,8 @@ header p {
   color: #a56b09;
 }
 
-/* ================= CONTENT ================= */
+
+/* CONTENT */
 
 .content-grid {
   display: grid;
@@ -400,7 +462,8 @@ header p {
   margin-top: 7px;
 }
 
-/* ================= PRIORITY ================= */
+
+/* PRIORITY */
 
 .priority {
   font-size: 8px;
@@ -424,7 +487,8 @@ header p {
   color: #21845d;
 }
 
-/* ================= MATCHING LOGIC ================= */
+
+/* MATCHING LOGIC */
 
 .logic {
   padding: 5px 17px 12px;
@@ -463,7 +527,8 @@ header p {
   line-height: 1.4;
 }
 
-/* ================= RUNNING BALANCE ================= */
+
+/* RUNNING BALANCE */
 
 .running-panel {
   margin-top: 13px;
@@ -474,7 +539,8 @@ header p {
   overflow-y: auto;
 }
 
-/* ================= TABLE ================= */
+
+/* TABLE */
 
 .table-wrap {
   overflow: auto;
@@ -517,7 +583,8 @@ header p {
   font-weight: 800;
 }
 
-/* ================= VARIANCE ================= */
+
+/* VARIANCE */
 
 .variance {
   font-size: 10px;
@@ -525,7 +592,8 @@ header p {
   color: #d05252;
 }
 
-/* ================= EMPTY ================= */
+
+/* EMPTY */
 
 .empty {
   padding: 45px 20px;
@@ -534,7 +602,8 @@ header p {
   font-size: 10px;
 }
 
-/* ================= TOAST ================= */
+
+/* TOAST */
 
 #toast {
   position: fixed;
@@ -554,7 +623,8 @@ header p {
   opacity: 1;
 }
 
-/* ================= RESPONSIVE ================= */
+
+/* RESPONSIVE */
 
 @media (max-width: 950px) {
 
@@ -578,21 +648,27 @@ header p {
   .metrics {
     grid-template-columns: 1fr 1fr;
   }
+
 }
 
-@media (max-width: 600px) {
-
-  main {
-    padding: 14px;
-  }
+@media (max-width: 700px) {
 
   header {
     flex-direction: column;
     gap: 15px;
   }
 
-  h1 {
-    font-size: 23px;
+  .demo-guide {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  main {
+    padding: 14px;
   }
 
   .metrics {
@@ -603,4 +679,9 @@ header p {
     align-items: flex-start;
     flex-wrap: wrap;
   }
+
+  .demo-guide {
+    justify-content: flex-start;
+  }
+
 }
