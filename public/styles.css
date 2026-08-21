@@ -1,36 +1,46 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 * {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 25px;
+  scroll-padding-top: 35px;
 }
 
 body {
   margin: 0;
   background: #f5f7fb;
   color: #172033;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+button,
+input {
+  font-family: inherit;
 }
 
 .shell {
-  display: flex;
   min-height: 100vh;
+  display: flex;
 }
 
 
-/* =========================================
-   FIXED SIDEBAR
-========================================= */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 aside {
-  width: 245px;
-  min-width: 245px;
-  height: 100vh;
-
-  position: sticky;
+  position: fixed;
+  left: 0;
   top: 0;
+
+  width: 245px;
+  height: 100vh;
 
   background: #101827;
   color: #aeb9c9;
@@ -41,19 +51,25 @@ aside {
   flex-direction: column;
 
   overflow-y: auto;
+
+  z-index: 100;
 }
 
 .brand {
   display: flex;
   align-items: center;
+
   gap: 10px;
+
   margin: 5px 8px 36px;
-  color: #fff;
+
+  color: #ffffff;
 }
 
 .logo {
-  width: 35px;
-  height: 35px;
+  width: 36px;
+  height: 36px;
+
   border-radius: 10px;
 
   background: linear-gradient(
@@ -65,7 +81,13 @@ aside {
   display: grid;
   place-items: center;
 
+  color: white;
+
+  font-size: 16px;
   font-weight: 900;
+
+  box-shadow:
+    0 5px 15px rgba(77, 93, 255, 0.25);
 }
 
 .brand b,
@@ -75,39 +97,43 @@ aside {
 
 .brand b {
   font-size: 15px;
+  line-height: 1.2;
 }
 
 .brand small {
   font-size: 10px;
   color: #7f8da3;
+  margin-top: 3px;
 }
 
 
-/* SIDEBAR BUTTONS */
+/* =========================================================
+   SIDEBAR NAVIGATION
+========================================================= */
 
 .nav {
   width: 100%;
 
   border: 0;
+  outline: none;
+
   background: transparent;
 
   color: #aeb9c9;
 
   padding: 12px;
 
-  border-radius: 8px;
-
   margin: 3px 0;
 
+  border-radius: 8px;
+
   display: flex;
+  align-items: center;
 
   gap: 10px;
 
-  align-items: center;
-
   font-size: 12px;
-
-  font-family: inherit;
+  font-weight: 500;
 
   text-align: left;
 
@@ -122,25 +148,29 @@ aside {
 .nav:hover {
   background: #182335;
   color: #ffffff;
+
+  transform: translateX(2px);
 }
 
 .nav.active {
   background: #202c3f;
   color: #ffffff;
-}
 
-.nav:not(.active):hover {
-  transform: translateX(2px);
+  box-shadow:
+    inset 3px 0 0 #7165ef;
 }
 
 .nav-icon {
-  width: 18px;
-  text-align: center;
+  width: 19px;
+
+  display: inline-flex;
+
+  justify-content: center;
+
+  align-items: center;
+
   font-size: 14px;
 }
-
-
-/* SIDEBAR CARD */
 
 .side-card {
   margin-top: auto;
@@ -156,43 +186,68 @@ aside {
 
 .side-card b {
   font-size: 12px;
-  color: #fff;
+  color: #ffffff;
 }
 
 .side-card p {
   font-size: 10px;
+
   line-height: 1.5;
+
   color: #8290a5;
+
+  margin: 7px 0 10px;
 }
 
 .side-card span {
   font-size: 8px;
+
   color: #42d39a;
+
   font-weight: 800;
 }
 
 .foot {
   font-size: 9px;
+
   color: #58667b;
+
   margin: 18px 8px 0;
 }
 
 
-/* =========================================
-   MAIN
-========================================= */
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
 
 main {
-  flex: 1;
+  width: calc(100% - 245px);
+
+  margin-left: 245px;
 
   padding: 32px 36px;
 
+  min-height: 100vh;
+
   max-width: 1500px;
-
-  margin: auto;
-
-  width: 100%;
 }
+
+
+/* =========================================================
+   SCROLL TARGETS
+========================================================= */
+
+#dashboard,
+#summary,
+#discrepancies,
+#matched {
+  scroll-margin-top: 30px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 header {
   display: flex;
@@ -203,7 +258,7 @@ header {
 
   gap: 25px;
 
-  scroll-margin-top: 25px;
+  margin-bottom: 4px;
 }
 
 .eyebrow {
@@ -233,9 +288,9 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    DEMO CTA
-========================================= */
+========================================================= */
 
 .demo-guide {
   display: flex;
@@ -266,13 +321,13 @@ header p {
 .demo-hint .arrow {
   display: inline-block;
 
+  color: #6255e8;
+
   font-size: 22px;
 
   font-weight: 900;
 
   line-height: 1;
-
-  color: #6255e8;
 
   animation:
     demoArrowMove 1.05s ease-in-out infinite;
@@ -287,11 +342,12 @@ header p {
 
   padding: 12px 19px;
 
-  background: linear-gradient(
-    135deg,
-    #7567f5 0%,
-    #5a4be0 100%
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #7567f5 0%,
+      #5a4be0 100%
+    );
 
   color: #ffffff;
 
@@ -302,7 +358,8 @@ header p {
   cursor: pointer;
 
   box-shadow:
-    0 6px 18px rgba(98, 85, 232, 0.28);
+    0 6px 18px
+    rgba(98, 85, 232, 0.28);
 
   transition:
     transform 0.2s ease,
@@ -323,10 +380,10 @@ header p {
 
   opacity: 0;
 
+  pointer-events: none;
+
   animation:
     demoPulse 2.2s ease-out infinite;
-
-  pointer-events: none;
 }
 
 .demo:hover {
@@ -342,7 +399,6 @@ header p {
 }
 
 @keyframes demoArrowMove {
-
   0%,
   100% {
     transform: translateX(0);
@@ -354,7 +410,6 @@ header p {
 }
 
 @keyframes demoPulse {
-
   0% {
     opacity: 0;
 
@@ -377,15 +432,17 @@ header p {
 }
 
 
-/* =========================================
-   UPLOAD
-========================================= */
+/* =========================================================
+   UPLOAD AREA
+========================================================= */
 
 .upload-grid {
   display: grid;
 
   grid-template-columns:
-    1fr 1fr auto;
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    auto;
 
   gap: 12px;
 
@@ -393,7 +450,7 @@ header p {
 }
 
 .upload-card {
-  background: #fff;
+  background: #ffffff;
 
   border: 1px solid #e3e7ee;
 
@@ -417,14 +474,13 @@ header p {
 .upload-title {
   display: flex;
 
-  gap: 10px;
-
   align-items: center;
+
+  gap: 10px;
 }
 
 .num {
   width: 26px;
-
   height: 26px;
 
   border-radius: 7px;
@@ -480,7 +536,7 @@ header p {
 
   background: #6255e8;
 
-  color: #fff;
+  color: #ffffff;
 
   padding: 0 19px;
 
@@ -488,7 +544,9 @@ header p {
 
   cursor: pointer;
 
-  transition: 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .reconcile:hover {
@@ -502,15 +560,15 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    METRICS
-========================================= */
+========================================================= */
 
 .metrics {
   display: grid;
 
   grid-template-columns:
-    repeat(4, 1fr);
+    repeat(4, minmax(0, 1fr));
 
   gap: 12px;
 
@@ -518,7 +576,7 @@ header p {
 }
 
 .metrics > div {
-  background: #fff;
+  background: #ffffff;
 
   border: 1px solid #e3e7ee;
 
@@ -526,7 +584,9 @@ header p {
 
   padding: 14px 16px;
 
-  transition: 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .metrics > div:hover {
@@ -552,12 +612,12 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    STATUS
-========================================= */
+========================================================= */
 
 .statusbar {
-  background: #fff;
+  background: #ffffff;
 
   border: 1px solid #e3e7ee;
 
@@ -590,6 +650,8 @@ header p {
   background: #a7b0bd;
 
   border-radius: 50%;
+
+  flex-shrink: 0;
 }
 
 .statusbar.good span:first-child {
@@ -601,53 +663,12 @@ header p {
 }
 
 
-/* =========================================
-   PANELS
-========================================= */
-
-.panel {
-  background: #fff;
-
-  border: 1px solid #e3e7ee;
-
-  border-radius: 11px;
-
-  overflow: hidden;
-}
-
-.panel-head {
-  padding: 15px 17px;
-
-  border-bottom: 1px solid #edf0f4;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-}
-
-.panel-head h2 {
-  font-size: 13px;
-
-  margin: 0 0 3px;
-}
-
-.panel-head p {
-  font-size: 10px;
-
-  color: #8791a1;
-
-  margin: 0;
-}
-
-
-/* =========================================
+/* =========================================================
    SUMMARY
-========================================= */
+========================================================= */
 
 .summary-card {
-  background: #fff;
+  background: #ffffff;
 
   border: 1px solid #e3e7ee;
 
@@ -657,7 +678,7 @@ header p {
 
   margin-bottom: 13px;
 
-  scroll-margin-top: 25px;
+  scroll-margin-top: 30px;
 }
 
 .summary-text {
@@ -697,19 +718,64 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
+   GENERIC PANELS
+========================================================= */
+
+.panel {
+  background: #ffffff;
+
+  border: 1px solid #e3e7ee;
+
+  border-radius: 11px;
+
+  overflow: hidden;
+}
+
+.panel-head {
+  padding: 15px 17px;
+
+  border-bottom:
+    1px solid #edf0f4;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.panel-head h2 {
+  font-size: 13px;
+
+  margin: 0 0 3px;
+}
+
+.panel-head p {
+  font-size: 10px;
+
+  color: #8791a1;
+
+  margin: 0;
+}
+
+
+/* =========================================================
    CONTENT GRID
-========================================= */
+========================================================= */
 
 .content-grid {
   display: grid;
 
   grid-template-columns:
-    1.25fr 0.75fr;
+    minmax(0, 1.25fr)
+    minmax(300px, 0.75fr);
 
   gap: 13px;
 
-  scroll-margin-top: 25px;
+  scroll-margin-top: 30px;
 }
 
 .list {
@@ -717,9 +783,9 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    DISCREPANCIES
-========================================= */
+========================================================= */
 
 .exception {
   padding: 14px 17px;
@@ -738,6 +804,8 @@ header p {
   justify-content: space-between;
 
   align-items: center;
+
+  gap: 12px;
 }
 
 .ex-title {
@@ -765,9 +833,9 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    PRIORITY
-========================================= */
+========================================================= */
 
 .priority {
   font-size: 8px;
@@ -777,6 +845,8 @@ header p {
   border-radius: 15px;
 
   font-weight: 800;
+
+  flex-shrink: 0;
 }
 
 .priority.high {
@@ -798,9 +868,9 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    MATCHING LOGIC
-========================================= */
+========================================================= */
 
 .logic {
   padding: 5px 17px 12px;
@@ -855,9 +925,9 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    RUNNING BALANCE
-========================================= */
+========================================================= */
 
 .running-panel {
   margin-top: 13px;
@@ -870,16 +940,18 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    TABLE
-========================================= */
+========================================================= */
 
 .table-wrap {
-  overflow: auto;
+  overflow-x: auto;
 }
 
 .table {
   width: 100%;
+
+  min-width: 650px;
 
   border-collapse: collapse;
 
@@ -894,6 +966,8 @@ header p {
   font-weight: 750;
 
   background: #fafbfc;
+
+  white-space: nowrap;
 }
 
 .table th,
@@ -925,9 +999,9 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    VARIANCE
-========================================= */
+========================================================= */
 
 .variance {
   font-size: 10px;
@@ -935,12 +1009,14 @@ header p {
   font-weight: 800;
 
   color: #d05252;
+
+  white-space: nowrap;
 }
 
 
-/* =========================================
+/* =========================================================
    EMPTY
-========================================= */
+========================================================= */
 
 .empty {
   padding: 45px 20px;
@@ -953,9 +1029,9 @@ header p {
 }
 
 
-/* =========================================
+/* =========================================================
    TOAST
-========================================= */
+========================================================= */
 
 #toast {
   position: fixed;
@@ -966,7 +1042,7 @@ header p {
 
   background: #172033;
 
-  color: #fff;
+  color: #ffffff;
 
   padding: 10px 14px;
 
@@ -976,19 +1052,25 @@ header p {
 
   opacity: 0;
 
-  transition: 0.2s;
+  transform: translateY(8px);
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 
   z-index: 1000;
 }
 
 #toast.show {
   opacity: 1;
+
+  transform: translateY(0);
 }
 
 
-/* =========================================
-   RESPONSIVE
-========================================= */
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 950px) {
 
@@ -997,6 +1079,10 @@ header p {
   }
 
   main {
+    width: 100%;
+
+    margin-left: 0;
+
     padding: 20px;
   }
 
@@ -1010,7 +1096,8 @@ header p {
   }
 
   .metrics {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
 }
@@ -1051,6 +1138,10 @@ header p {
 
   .demo-guide {
     justify-content: flex-start;
+  }
+
+  h1 {
+    font-size: 24px;
   }
 
 }
